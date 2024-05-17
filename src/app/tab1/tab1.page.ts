@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ShoppingItemsService} from "../services/shopping-items.service";
-import {AlertController} from "@ionic/angular";
+import {AlertController, MenuController} from "@ionic/angular";
 
 @Component({
   selector: 'app-tab1',
@@ -11,7 +11,8 @@ export class Tab1Page {
 
   constructor(
     public shoppingList: ShoppingItemsService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private menuController: MenuController
   ) {}
 
   async removeItem(item: string) {
@@ -48,5 +49,29 @@ export class Tab1Page {
     $event.detail.complete();
     console.log(this.shoppingList.items);
 
+  }
+
+  async removeAll() {
+    const alert = await this.alertController.create({
+      header: 'Confirmación',
+      message: '¿Estas seguro de borrar todos los items?',
+      buttons: [
+        {
+          text: 'Si',
+          handler: () => {
+            this.shoppingList.removeAllItems();
+            this.menuController.close();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            alert.dismiss()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
