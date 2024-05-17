@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ShoppingItemsService} from "../services/shopping-items.service";
 
 @Component({
   selector: 'app-tab2',
@@ -9,9 +10,20 @@ export class Tab2Page {
 
   public item: string;
 
-  constructor() {}
+  constructor(
+    private shoppingList: ShoppingItemsService
+  ) {}
 
   addItem() {
-    console.log(this.item)
+    console.log(this.item);
+
+    if (!this.shoppingList.existsItem(this.item)){
+      this.shoppingList.addItem(this.item);
+      this.item = '';
+      console.log(this.shoppingList.items);
+
+    } else {
+
+    }
   }
 }
