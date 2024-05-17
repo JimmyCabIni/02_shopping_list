@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
+  public item: string;
+
   constructor() {}
 
+  addItem() {
+    console.log(this.item)
+  }
 }
